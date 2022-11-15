@@ -158,11 +158,7 @@ def web_mbti_post():
     db.mbti.insert_one(doc)
     return jsonify({'msg': '저장 완료!'})
 
-@app.route("/index", methods=["GET"])
-def web_mbti_get():
-    order_list = list(db.mbti.find({}, {'_id': False}))
-    print(order_list)
-    return jsonify({'orders':order_list})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
