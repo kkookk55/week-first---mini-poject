@@ -62,6 +62,36 @@
 
     </style>
     <script>
+
+        $(document).ready(function () {
+            show_mbti();
+        });
+
+        function show_mbti() {
+            $('#mbti-writing').empty()
+            $.ajax({
+                type: "GET",
+                url: "/index",
+                data: {},
+                success: function (response) {
+                    console.log(response['content'])
+                    let rows = response['content']
+                    for (let i = 0; i < rows.length; i++) {
+                        let title = rows[i]['title']
+                        let mbti = rows[i]['mbti']
+                        let contents = rows[i]['contents']
+
+                        let temp_html = `<h2>${title}</h2>
+                                        <h2>${mbti}</h2>
+                                        <h2>${contents}</h2>
+                        `
+
+                        $('#mbti-writing').append(temp_html)
+                    }
+                }
+            });
+        }
+
         function count(type) {
             // 결과를 표시할 element
             const resultElement = document.getElementById('result');
@@ -83,17 +113,21 @@
 <body>
 
 <h1>
-    여기에는 제목이 들어갑니다.
+    ${title}
 </h1>
 <div id="align_body">
     <div id="mbti_check">
-        mbti
+        ${mbti}
     </div>
 </div>
-<div class="mb-3">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-</div>
 
+<div class="mybox" id="mbti-writing"></div>
+
+<div class="mb-3">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
+
+
+</div>
 <div id="like_btn">
     <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
         좋아요
@@ -108,7 +142,6 @@
     <button type="button" class="btn btn-secondary" id="btn_sujeong">수정하기</button>
     <button type="button" class="btn btn-danger" onclick="return confirm('정말삭제하시겠습니까?')">삭제하기</button>
 </div>
-
 
 
 </body>
