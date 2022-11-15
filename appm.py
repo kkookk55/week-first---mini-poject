@@ -158,6 +158,11 @@ def web_mbti_post():
     db.mbti.insert_one(doc)
     return jsonify({'msg': '저장 완료!'})
 
+@app.route("/posts", methods=["GET"])
+def posts_get():
+    posts_list = list(db.mbti.find({},{'_id':False}))
+    return jsonify({'post':posts_list})
+
 
 
 if __name__ == '__main__':
