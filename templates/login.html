@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <!-- Webpage Title -->
+    <title>Hello, world!</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/logincss.css">
+    <script>
+        {% if msg %}
+            alert("{{ msg }}")
+        {% endif %}
+        // ['쿠키'라는 개념에 대해 알아봅시다]
+        // 로그인을 구현하면, 반드시 쿠키라는 개념을 사용합니다.
+        // 페이지에 관계없이 브라우저에 임시로 저장되는 정보입니다. 키:밸류 형태(딕셔너리 형태)로 저장됩니다.
+        // 쿠키가 있기 때문에, 한번 로그인하면 네이버에서 다시 로그인할 필요가 없는 것입니다.
+        // 브라우저를 닫으면 자동 삭제되게 하거나, 일정 시간이 지나면 삭제되게 할 수 있습니다.
+        function login() {
+            $.ajax({
+                type: "POST",
+                url: "/api/login",
+                data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
+                        // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
+                        $.cookie('mytoken', response['token']);
+
+
+                        alert('로그인 완료!')
+                        window.location.href = '/main'
+                    } else {
+                        // 로그인이 안되면 에러메시지를 띄웁니다.
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+
+    </script>
+
+    <style>
+        input {
+        height: 40px;
+        width: 100%;
+        margin: 20px auto;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        color: white;
+        background: #0b2144;
+  padding-left:5px;
+        font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    }
+
+    button {
+        height: 40px;
+        width: 100%;
+        border-radius: 4px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        border: none;
+        background: #27d4e8;
+        color: #ffffff;
+        font-family: sans-serif;
+        font-weight: 700;
+        font-size: 14pt;
+    }
+
+    form {
+        width: 90%;
+        margin: 40px auto;
+        text-align: center;
+    }
+
+    input:focus {
+        outline: none
+    }
+
+    .logo {
+        color: white;
+        font-family: sans-serif;
+        font-size: 15pt;
+        font-weight: 600;
+        text-align: center;
+        padding-top: 40px
+    }
+
+    .myform {
+        background: #0b2144;
+        width: 40%;
+        margin: auto;
+        height: 600px;
+        -webkit-box-shadow: 0px 0px 3px 1px rgba(38, 35, 128, 1);
+        -moz-box-shadow: 0px 0px 3px 1px rgba(38, 35, 128, 1);
+        box-shadow: 0px 0px 3px 1px rgba(38, 35, 128, 1);
+    }
+
+    .myform a {
+        text-decoration: none;
+        color: white;
+        font-family: sans-serif;
+        letter-spacing: .1em;
+    }
+
+     ::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+         color: #cccccc;
+
+    }
+.fa-cloud-upload{
+  font-size:90px;
+
+}
+
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #cccccc;
+          }
+
+    :-ms-input-placeholder {
+        /* IE 10+ */
+         color: #cccccc;
+         }
+
+    :-moz-placeholder {
+        /* Firefox 18- */
+        color: #cccccc;
+
+    }
+  @media screen and (max-width:500px){
+        .myform{
+            width:80%;
+        }
+    }
+    @media screen and (max-width:800px){
+        .myform{
+            width:60%;
+        }
+    }
+    </style>
+</head>
+    <body>
+        <div class="myform">
+            <div class="logo">PLEASE LOG IN!
+                <div><i class="fa fa-cloud-upload" aria-hidden="true"></i></div>
+            </div>
+            <form>
+                <input type="text" id="userid" aria-describedby="emailHelp"
+                       placeholder="&#xf003; ID"/>
+
+                <input type="password" id="userpw" placeholder=" &#xf023;  Password"/>
+                <button class="button is-primary" onclick="login()">로그인</button>
+            </form>
+        </div>
+
+    </body>
+</html>
