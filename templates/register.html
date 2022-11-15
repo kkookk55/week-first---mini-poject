@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <!-- Webpage Title -->
+        <title>Hello, world!</title>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bulma CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+        <script>
+            // 간단한 회원가입 함수입니다.
+            // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
+            function register() {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/register",
+                    data: {
+                        id_give: $('#userid').val(),
+                        pw_give: $('#userpw').val(),
+                        nickname_give: $('#usernick').val()
+                    },
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            alert('회원가입이 완료되었습니다.')
+                            window.location.href = '/login'
+                        } else {
+                            alert(response['msg'])
+                        }
+                    }
+                })
+            }
+
+        </script>
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+
+                color: #ffffff;
+                font-size: 15px;
+            }
+
+            input,
+            textarea,
+            button {
+                color: #ffffff;
+                font-size: 15px;
+            }
+
+            input:focus,
+            textarea:focus,
+            button:focus {
+                outline: none;
+            }
+
+            textarea {
+                resize: none;
+            }
+
+            h3 {
+                margin: 0 0 12px 0;
+
+                font-size: 45px;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            p {
+                padding: 0 10px;
+                margin: 0 0 55px 0;
+
+                text-align: center;
+                line-height: 1.8;
+            }
+
+            .wrapper {
+                min-height: 100vh;
+
+                display: flex;
+                align-items: center;
+            }
+
+            .form-container {
+                max-width: 767px;
+
+                margin: auto;
+                padding: 70px 100px 80px;
+
+                border: 10px solid #95c6db;
+                background: #39459b;
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            .form-group {
+                position: relative;
+
+                display: block;
+
+                margin-bottom: 48px;
+            }
+
+            .form-group span {
+                position: absolute;
+                top: 11px;
+
+                color: #04a5db;
+                font-size: 15px;
+                cursor: text;
+                transition: all 0.2s ease;
+                transform-origin: 0 0;
+            }
+
+            .form-group span.border {
+                position: absolute;
+                left: 0;
+                top: 41px;
+
+                width: 100%;
+                height: 2px;
+
+                display: block;
+                background: #ffffff;
+                transform: scaleX(0);
+                transition: all 0.15s ease;
+            }
+
+            .form-control {
+                width: 100%;
+                height: 43px;
+
+                display: block;
+
+                font-size: 15px;
+                border: none;
+                border-bottom: 2px solid #04a5db;
+                background: none;
+            }
+
+            .form-control:focus,
+            .form-control:valid {
+                border-bottom: 2px solid #ffffff;
+            }
+
+            .form-control:focus + span,
+            .form-control:valid + span {
+                transform: translateY(-22px) scale(0.8);
+            }
+
+            .form-control:focus + span + .border,
+            .form-control:valid + span + .border {
+                transform: scaleX(1);
+            }
+
+            textarea.form-control {
+                padding: 13px 1px;
+            }
+
+            button[type="submit"] {
+                width: 162px;
+                height: 51px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                margin: 60px auto 0;
+                padding: 0;
+
+                color: #ffffff;
+                border: 2px solid #ffffff;
+                border-radius: 4px;
+                background-color: #39459b;
+                cursor: pointer;
+                text-transform: uppercase;
+                transition: background-color 0.2s linear;
+            }
+
+            button[type="submit"]:hover {
+                background-color: #299cd1;
+            }
+
+            @media (max-width: 767px) {
+                h3 {
+                    font-size: 38px
+                }
+
+                p {
+                    padding: 0;
+                    font-size: 14px;
+                }
+
+                .wrapper {
+                    background: #39459b;
+                    border: 10px solid #95c6db;
+                }
+
+                .form-container {
+                    width: 100%;
+
+                    padding: 24px;
+
+                    border: none;
+                    box-shadow: none;
+                }
+            }
+        </style>
+
+
+    </head>
+    <body>
+
+
+        <div class="wrapper">
+            <div class="form-container">
+                <form>
+                    <h3>회원 가입</h3>
+                    <p>양식에 맞추어 회원 정보를 입력해주세요.</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  id="userid" aria-describedby="emailHelp" required>
+                        <span>ID</span>
+                        <span class="border"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="userpw" class="form-control" required>
+                        <span>PASSWORD</span>
+                        <span class="border"></span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <span>MBTI</span>
+
+                        <span class="border"></span>
+                         <select id="usernick" style="margin-top: 40px; background-color: aqua; color: antiquewhite">
+                            <option value="enfp">E N F P</option>
+                            <option value="enfj">E N F J</option>
+                            <option value="entp">E N T P</option>
+                            <option value="entj">E N T J</option>
+
+                            <option value="esfp">E S F P</option>
+                            <option value="esfj">E S F J</option>
+                            <option value="estp">E S T P</option>
+                            <option value="estj">E S T J</option>
+
+                            <option value="infp">I N F P</option>
+                            <option value="infj">I N F J</option>
+                            <option value="intp">I N T P</option>
+                            <option value="intj">I N T J</option>
+
+                            <option value="isfp">I S F P</option>
+                            <option value="isfj">I S F J</option>
+                            <option value="istp">I S T P</option>
+                        </select>
+                    </div>
+                    <button type="submit" onclick="register()">회원가입</button>
+                </form>
+            </div>
+        </div>
+
+
+    </body>
+</html>
