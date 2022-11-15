@@ -10,7 +10,7 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/main.css">
+<!--    <link rel="stylesheet" href="../static/main.css">-->
     <style>
         * {
             font-family: 'Gowun Dodum', sans-serif;
@@ -95,6 +95,7 @@
         <div class="nav">
             <div id="logout">
                 <button onclick="window.location.href='/'">로그아웃</button>
+                <span>아이디자리</span>
             </div>
         </div>
         <div class="main-container">
@@ -104,28 +105,30 @@
             <div class="main-menu">
                 <div class="main-nav">
                     <div class="mbti-op">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text op-color" for="inputGroupSelect01">MBTI</label>
-                            <select class="form-select  op-color" id="inputGroupSelect01">
-                                <option selected>선택하기</option>
-                                <option value="1">ENTJ</option>
-                                <option value="2">ENTP</option>
-                                <option value="3">ENFJ</option>
-                                <option value="4">ENFP</option>
-                                <option value="5">ESTJ</option>
-                                <option value="6">ESTP</option>
-                                <option value="7">ESFJ</option>
-                                <option value="8">ESFP</option>
-                                <option value="9">INTJ</option>
-                                <option value="10">INTP</option>
-                                <option value="11">INFJ</option>
-                                <option value="12">INFP</option>
-                                <option value="13">ISTJ</option>
-                                <option value="14">ISTP</option>
-                                <option value="15">ISFJ</option>
-                                <option value="16">ISFP</option>
-                                <option value="18">모두 선택</option>
-                            </select>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                MBTI선택하기
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="https://naver.com">ESTJ</a></li>
+                                <li><a class="dropdown-item" href="#">ESTP</a></li>
+                                <li><a class="dropdown-item" href="#">ESFJ</a></li>
+                                <li><a class="dropdown-item" href="#">ESFP</a></li>
+                                <li><a class="dropdown-item" href="#">ENTJ</a></li>
+                                <li><a class="dropdown-item" href="#">ENTP</a></li>
+                                <li><a class="dropdown-item" href="#">ENSJ</a></li>
+                                <li><a class="dropdown-item" href="#">ENSP</a></li>
+                                <li><a class="dropdown-item" href="#>ISTJ</a></li>
+                                <li><a class="dropdown-item" href="#">ISTP</a></li>
+                                <li><a class="dropdown-item" href="#">ISFJ</a></li>
+                                <li><a class="dropdown-item" href="#">ISFP</a></li>
+                                <li><a class="dropdown-item" href="#">INTJ</a></li>
+                                <li><a class="dropdown-item" href="#">INTP</a></li>
+                                <li><a class="dropdown-item" href="#">INSJ</a></li>
+                                <li><a class="dropdown-item" href="#">INSP</a></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="main-search">
@@ -136,7 +139,7 @@
                         </div>
                     </div>
                     <div class="main-writing">
-                        <button type="button" class="btn btn-outline-secondary op-color op-color-hover" onclick="window.location.href='/logout'">
+                        <button type="button" class="btn btn-outline-secondary op-color op-color-hover" onclick="window.location.href='/writing'"">
                             글쓰기</button>
                     </div>
                 </div>
@@ -145,12 +148,12 @@
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col">
                         <div class="card h-100">
-                            <h6 class="card-mbti">mbti</h6>
+                            <h6 class="card-mbti" id="mbti">mbti</h6>
                             <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title" id="title">TIL제목</h5>
-                                <h6 class="card-title" id="tech">TIL기술</h6>
-                                <p class="card-text" id="desc">
+                                <h6 class="card-title" id="">작성자</h6>
+                                <p class="card-text" id="contents">
                                     - 변수 선언은 변수에 어떤 type의 데이터를 저장할 것인지 그리고 변수 이름이 무엇인지 결정
                                     - int v1 = 0; //정수type
                                     String name = "홍길동"; //문자열
