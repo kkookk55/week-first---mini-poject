@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <title>글 작성 페이지</title>
+
+    <style>
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0px 50px 0px;
+            line-height: 100px;
+            font-weight: bold;
+        }
+
+        .form-select {
+            width: 150px;
+        }
+
+        .form-control {
+            maring-bottom: 40px;
+        }
+
+        /*mbti*/
+        .mypost {
+            max-width: 90%;
+            margin: auto;
+            box-shadow: 0px 0px 3px 0px gray;
+            padding: 40px;
+            margin-bottom: 100px;
+        }
+
+        .mybtn {
+            margin-top: 20px;
+        }
+
+        #exampleFormControlTextarea1 {
+            height: 400px;
+            margin: 20px auto 10px auto;
+        }
+
+        .mbti-list {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+    </style>
+    <script>
+        function save_writing() {
+            let title = $('#title').val()
+            let mbti = $('#mbti').val()
+            let contents = $('#exampleFormControlTextarea1').val()
+            // let user_id = $('#contents').val()
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/writing',
+                data: {title_give: title, mbti_give: mbti, contents_give: contents},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload() // 새로고침
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+<!--제목-->
+<h1>글 작성 페이지</h1>
+
+<!--mbti-->
+<div class="mypost">
+    <div class="mbti-list">
+        <h5 class="mbti">본인의 MBTI</h5>
+        <select class="form-select" aria-label="Default select example" id="mbti">
+            <option selected>선택하기</option>
+            <option value="1">ENTJ</option>
+            <option value="2">ENTP</option>
+            <option value="3">ENFJ</option>
+            <option value="4">ENFP</option>
+            <option value="5">ESTJ</option>
+            <option value="6">ESTP</option>
+            <option value="7">ESFJ</option>
+            <option value="8">ESFP</option>
+            <option value="9">INTJ</option>
+            <option value="10">INTP</option>
+            <option value="11">INFJ</option>
+            <option value="12">INFP</option>
+            <option value="13">ISTJ</option>
+            <option value="14">ISTP</option>
+            <option value="15">ISFJ</option>
+            <option value="16">ISFP</option>
+
+
+        </select>
+
+    </div>
+    <!--제목 작성-->
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput" id="title">제목을 입력하세요.</label>
+    </div>
+
+    <!--    글 내용 작성-->
+    <div class="mb-3">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">내용을 입력하세요.</textarea>
+    </div>
+    <!--작성 취소 버튼-->
+    <script>
+        function history_back() {
+            history.back();
+        }
+    </script>
+    <div class="mybtn">
+        <button type="button" class="btn btn-dark" value="history.back()" onclick="history_back()">취소</button>
+        <button onclick="save_writing()" type="button" class="btn btn-outline-dark">작성하기</button>
+
+    </div>
+</div>
+
+</body>
+
+</html>
