@@ -10,7 +10,6 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-<!--    <link rel="stylesheet" href="../static/main.css">-->
     <style>
         * {
             font-family: 'Gowun Dodum', sans-serif;
@@ -87,8 +86,74 @@
         }
     </style>
     <script>
+        $(document).ready(function () {
+            listing();
+        });
+
+        function listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/posts',
+                data: {},
+                success: function (response) {
+                    console.log(response['post'])
+                    let rows = response['post']
+                    for(let i = 0; i<rows.length;i++) {
+                        let mbti =rows[i]['mbti']
+                        let title= rows[i]['title']
+                        let contents = rows[i]['contents']
+
+                        let temp_html = `<div class="col">
+                                            <div class="card h-100">
+                                                <h6 class="card-mbti" id="mbti">${mbti}</h6>
+                                                <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title" id="title">${title}</h5>
+                                                    <h6 class="card-title" id="">작성자</h6>
+                                                    <p class="card-text" id="contents">
+                                                        ${contents}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        $('#post-box').append(temp_html)
+                    }
+                }
+            })
+        }
 
 
+            function listing_mbti() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/postchosen',
+                    data: {},
+                    success: function (response) {
+                        console.log(response['mbtipost'])
+                        let rows = response['mbtipost']
+                        for (let i = 0; i < rows.length; i++) {
+                            let mbti = rows[i]['mbti']
+                            let title = rows[i]['title']
+                            let contents = rows[i]['contents']
+
+                            let temp_html = `<div class="col">
+                                            <div class="card h-100">
+                                                <h6 class="card-mbti" id="mbti">${mbti}</h6>
+                                                <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title" id="title">${title}</h5>
+                                                    <h6 class="card-title" id="">작성자</h6>
+                                                    <p class="card-text" id="contents">
+                                                        ${contents}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>`
+                            $('#post-box').append(temp_html)
+                        }
+                    }
+                })
+            }
     </script>
 </head>
 <body>
@@ -107,28 +172,59 @@
                 <div class="main-nav">
                     <div class="mbti-op">
                         <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                               data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                 MBTI선택하기
-                            </a>
-
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="https://naver.com">ESTJ</a></li>
-                                <li><a class="dropdown-item" href="#">ESTP</a></li>
-                                <li><a class="dropdown-item" href="#">ESFJ</a></li>
-                                <li><a class="dropdown-item" href="#">ESFP</a></li>
-                                <li><a class="dropdown-item" href="#">ENTJ</a></li>
-                                <li><a class="dropdown-item" href="#">ENTP</a></li>
-                                <li><a class="dropdown-item" href="#">ENSJ</a></li>
-                                <li><a class="dropdown-item" href="#">ENSP</a></li>
-                                <li><a class="dropdown-item" href="https://naver.com">ISTJ</a></li>
-                                <li><a class="dropdown-item" href="#">ISTP</a></li>
-                                <li><a class="dropdown-item" href="#">ISFJ</a></li>
-                                <li><a class="dropdown-item" href="#">ISFP</a></li>
-                                <li><a class="dropdown-item" href="#">INTJ</a></li>
-                                <li><a class="dropdown-item" href="#">INTP</a></li>
-                                <li><a class="dropdown-item" href="#">INSJ</a></li>
-                                <li><a class="dropdown-item" href="#">INSP</a></li>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li>
+                                    <button class="dropdown-item" type="button">ESTJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ESTP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ESFJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ESFP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ENTJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ENTP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ENFJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ENFP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ISTJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ISTP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ISFJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">ISFP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">INTJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">INTP</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">INFJ</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">INFP</button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -146,7 +242,7 @@
                 </div>
             </div>
             <div class="main-body">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="row row-cols-1 row-cols-md-3 g-4" id="post-box">
                     <div class="col">
                         <div class="card h-100">
                             <h6 class="card-mbti" id="mbti">mbti</h6>
