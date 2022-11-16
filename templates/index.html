@@ -81,7 +81,7 @@
                         let mbti = rows[i]['mbti']
                         let contents = rows[i]['contents']
 
-                        let temp_html = `<h2>${title}</h2>
+                        let temp_html = `<h1>${title}</h1>
                                         <h2>${mbti}</h2>
                                         <h2>${contents}</h2>
                         `
@@ -111,17 +111,15 @@
     </script>
 </head>
 <body>
+<div class="mybox" id="mbti-writing"></div>
 
-<h1>
-    ${title}
-</h1>
 <div id="align_body">
     <div id="mbti_check">
         ${mbti}
     </div>
 </div>
 
-<div class="mybox" id="mbti-writing"></div>
+
 
 <div class="mb-3">
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>

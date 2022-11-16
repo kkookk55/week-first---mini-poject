@@ -29,7 +29,7 @@ def web_mbti_post():
     db.mbti.insert_one(doc)
     return jsonify({'msg': '저장 완료!'})
 
-@app.route("/index", methods=["GET"]) # get 보여주기
+@app.route("/index", methods=["GET"])
 def contents_get():
     contents_list = list(db.mbti.find({}, {'_id': False}))
     return jsonify({'content':contents_list})
