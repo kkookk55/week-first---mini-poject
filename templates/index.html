@@ -76,7 +76,7 @@
             $.ajax({
                 type: "POST",
                 url: "/api/index",
-                data: { postnum_give : hashes},
+                data: {postnum_give: hashes},
                 success: function (response) {
                     console.log(response['post'])
                     let row = response['post']
@@ -98,7 +98,7 @@
                                         </div>`
 
                     $('#mbti-writing').append(temp_html)
-                    }
+                }
 
             });
         }
@@ -134,10 +134,20 @@
   </span>
 
     </button>
+
+    <script>
+        function sujeong() {
+            let postnum = window.location.href.slice(window.location.href.indexOf('?') + 9)
+            location.href='/writing?postnum='+postnum;
+        }
+    </script>
 </div>
 <div id="recall">
-    <button type="button" class="btn btn-secondary" id="btn_sujeong">수정하기</button>
+    <button type="button" class="btn btn-secondary" id="btn_sujeong" onclick="sujeong()">수정하기</button>
     <button type="button" class="btn btn-danger" onclick="return confirm('정말삭제하시겠습니까?')">삭제하기</button>
+{#    window.location.href='/index?postnum='+postnum;#}
+{#    "location.href='/writing';"#}
+{#    let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)#}
 </div>
 
 </body>
