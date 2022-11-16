@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <title>글 작성 페이지</title>
+
+    <style>
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0px 50px 0px;
+            line-height: 100px;
+            font-weight: bold;
+        }
+
+        .form-select {
+            width: 150px;
+        }
+
+        .form-control {
+            maring-bottom: 40px;
+        }
+
+        /*mbti*/
+        .mypost {
+            max-width: 90%;
+            margin: auto;
+            box-shadow: 0px 0px 3px 0px gray;
+            padding: 40px;
+            margin-bottom: 100px;
+        }
+
+        .mybtn {
+            margin-top: 20px;
+        }
+
+        #exampleFormControlTextarea1 {
+            height: 400px;
+            margin: 20px auto 10px auto;
+        }
+
+        .mbti-list {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            writing_sujeong();
+        });
+
+        function writing_sujeong() {
+            $.ajax({
+                type: 'GET',
+                url: '/posts',
+                data: {},
+                success: function (response) {
+                    console.log(response['post'])
+                    {#let rows = response['post']#}
+                    {#for(let i = 0; i<rows.length;i++) {#}
+                    {#    let mbti =rows[i]['mbti']#}
+                    {#    let title= rows[i]['title']#}
+                    {#    let contents = rows[i]['contents']#}
+                    {#    let writer = rows[i]['userid']#}
+                    {#    let postnum = rows[i]['num']#}
+                    {#    let temp_html = `<div class="col">#}
+                    {#                        <div class="card h-100" onclick="move(${postnum})">#}
+                    {#                            <h6 class="card-mbti" id="mbti">게시글번호:${postnum} / MBTI: ${mbti}</h6>#}
+                    {#                            <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">#}
+                    {#                            <div class="card-body">#}
+                    {#                                <h5 class="card-title" id="title">${title}</h5>#}
+                    {#                                <h6 class="card-title" id="">${writer}님의 글</h6>#}
+                    {#                                <p class="card-text" id="contents">#}
+                    {#                                    ${contents}#}
+                    {#                                </p>#}
+                    {#                                <button onclick="move(${postnum})">글로이동</button>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </div>`#}
+                    {#    $('#post-box').append(temp_html)#}
+                    {# }#}
+                }
+            })
+        }
+
+
+    </script>
+    <script>
+        function save_writing() {
+            let title = $('#floatingInput').val()
+            let mbti = $('#mbti').val()
+            let contents = $('#exampleFormControlTextarea1').val()
+
+            $.ajax({
+                type: 'POST',
+                url: '/writing',
+                data: {title_give: title, mbti_give: mbti, contents_give: contents},
+                success: function (response) {
+                    alert(response['msg'])
+                    let postnum = response['postnum']
+                    window.location.href='/index?postnum='+postnum;
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+<!--제목-->
+<h1>글 수정 페이지</h1>
+
+<!--mbti-->
+<div class="mypost">
+    <div class="mbti-list">
+        <h5 class="mbti">본인의 MBTI</h5>
+        <select class="form-select" aria-label="Default select example" id="mbti">
+            <option selected>선택하기</option>
+            <option value="ENTJ">ENTJ</option>
+            <option value="ENTP">ENTP</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="ENFP">ENFP</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ESFP">ESFP</option>
+            <option value="INTJ">INTJ</option>
+            <option value="INTP">INTP</option>
+            <option value="INFJ">INFJ</option>
+            <option value="INFP">INFP</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="ISFP">ISFP</option>
+
+
+        </select>
+
+    </div>
+    <!--제목 작성-->
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput" id="title">제목을 입력하세요.</label>
+    </div>
+
+    <!--    글 내용 작성-->
+    <div class="mb-3">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">내용을 입력하세요.</textarea>
+    </div>
+    <!--작성 취소 버튼-->
+    <script>
+        function history_back() {
+            history.back();
+        }
+    </script>
+    <div class="mybtn">
+        <button type="button" class="btn btn-dark" value="history.back()" onclick="history_back()">취소</button>
+        <button onclick="save_writing()" type="button" class="btn btn-outline-dark">작성하기</button>
+
+    </div>
+</div>
+
+</body>
+
+</html>

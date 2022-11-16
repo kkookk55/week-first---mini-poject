@@ -66,6 +66,10 @@ def register():
 def writing():
     return render_template('writing.html')
 
+@app.route('/sujeong')
+def sujeong():
+    return render_template('sujeong.html')
+
 @app.route("/index", methods=["POST"])
 def contents_get():
     postnum_receive = request.form['postnum_give']
