@@ -119,6 +119,24 @@
             console.log("좋아요: " + number)
             resultElement.innerText = number;
         }
+
+        function deletePost(){
+              let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
+                $.ajax({
+
+                    type: "POST",
+                    url: "/api/delete",
+                    data: {
+                        postnum_give: hashes
+                    },
+                    success: function (response) {
+                        let msg =response['msg']
+                        alert(msg)
+                        window.location.href='/main'
+                    }
+                })
+            }
+
     </script>
 </head>
 <body>
@@ -143,11 +161,16 @@
     </script>
 </div>
 <div id="recall">
+<<<<<<< HEAD
     <button type="button" class="btn btn-secondary" id="btn_sujeong" onclick="sujeong()">수정하기</button>
     <button type="button" class="btn btn-danger" onclick="return confirm('정말삭제하시겠습니까?')">삭제하기</button>
 {#    window.location.href='/index?postnum='+postnum;#}
 {#    "location.href='/writing';"#}
 {#    let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)#}
+=======
+    <button type="button" class="btn btn-secondary" id="btn_sujeong">수정하기</button>
+    <button type="button" class="btn btn-danger" onclick="deletePost()">삭제하기</button>
+>>>>>>> e356dcfa791a0a4728677fb25ad7fd69de93f9ba
 </div>
 
 </body>

@@ -78,6 +78,16 @@ def contents_get():
 
     return jsonify({'postinfo':content})
 
+@app.route("/api/delete", methods=["POST"])
+def delete_post():
+    postnum_receive = request.form['postnum_give']
+
+    print(postnum_receive)
+    # ok
+
+    db.post.delete_one({'num':int(postnum_receive)})
+
+    return jsonify({'msg':'삭제가 완료 되었습니다.'})
 #################################
 ##  로그인을 위한 API            ##
 #################################
