@@ -5,10 +5,8 @@ app = Flask(__name__)
 from pymongo import MongoClient
 import certifi
 
-ca = certifi.where()
-
-client = MongoClient("mongodb+srv://test:test@cluster0.15fhovx.mongodb.net/test", tlsCAFile=ca)
-db = client.dbsparta_plus_week4
+client = MongoClient('mongodb+srv://test:sparta@cluster0.xig8tvq.mongodb.net/?retryWrites=true&w=majority')
+db = client.project
 
 # JWT 토큰을 만들 때 필요한 비밀문자열입니다. 아무거나 입력해도 괜찮습니다.
 # 이 문자열은 서버만 알고있기 때문에, 내 서버에서만 토큰을 인코딩(=만들기)/디코딩(=풀기) 할 수 있습니다.
@@ -30,16 +28,11 @@ import hashlib
 #################################
 @app.route('/')
 def home():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"id": payload['id']})
-        return render_template('modify.html', nickname=user_info["nick"])
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+    return render_template('login.html')
 
+@app.route('/index')
+def goindex():
+    return render_template('index.html')
 
 @app.route('/main')
 def goMain():
@@ -68,6 +61,10 @@ def register():
 def writing():
     return render_template('writing.html')
 
+@app.route("/index", methods=["GET"])
+def contents_get():
+    contents_list = list(db.post.find({},{'_id':False}))
+    return jsonify({'content':contents_list})
 
 #################################
 ##  로그인을 위한 API            ##
@@ -84,7 +81,7 @@ def api_register():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'nick': nickname_receive})
+    db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'mbti': nickname_receive})
 
     return jsonify({'result': 'success'})
 
@@ -148,23 +145,42 @@ def api_valid():
     except jwt.exceptions.DecodeError:
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
 
-        # ///////////////////////////////////////////////////////
 
+
+@app.route("/posts", methods=["GET"])
+def posts_get():
+    posts_list = list(db.post.find({},{'_id':False}))
+    return jsonify({'post':posts_list})
 
 @app.route('/writing', methods=['POST'])
 def web_mbti_post():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    print(payload)
+    userinfo = db.user.find_one({'id': payload['id']}, {'_id': 0})
+
+
+    contents_list = list(db.post.find({}, {'_id': False}))
+    count = len(contents_list) + 1
+
+    userid_receive = userinfo['id']
     title_receive = request.form['title_give']
     mbti_receive = request.form['mbti_give']
     contents_receive = request.form['contents_give']
+
+
     # doc = 저장
     doc = {
+        'num':count,
         'title': title_receive,
         'mbti': mbti_receive,
         'contents': contents_receive,
+        'userid' : userid_receive
     }
-    db.mbti.insert_one(doc)
+    db.post.insert_one(doc)
 
-    return jsonify({'msg': '저장 완료!'})
+    postnum = db.post.find_one({'num':count},{'_id':False})
+    return jsonify({'msg': '저장 완료!'},{'postnum':postnum})
 
 
 if __name__ == '__main__':

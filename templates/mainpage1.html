@@ -102,14 +102,15 @@
                         let mbti =rows[i]['mbti']
                         let title= rows[i]['title']
                         let contents = rows[i]['contents']
-
+                        let writer = rows[i]['userid']
+                        let postnum = rows[i]['num']
                         let temp_html = `<div class="col">
                                             <div class="card h-100">
-                                                <h6 class="card-mbti" id="mbti">${mbti}</h6>
+                                                <h6 class="card-mbti" id="mbti">게시글번호:${postnum} / MBTI: ${mbti}</h6>
                                                 <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
                                                 <div class="card-body">
                                                     <h5 class="card-title" id="title">${title}</h5>
-                                                    <h6 class="card-title" id="">작성자</h6>
+                                                    <h6 class="card-title" id="">${writer}님의 글</h6>
                                                     <p class="card-text" id="contents">
                                                         ${contents}
                                                     </p>
@@ -146,6 +147,7 @@
                                                     <p class="card-text" id="contents">
                                                         ${contents}
                                                     </p>
+                                                     <button>해당 글로 이동하는 버튼입니다</button>
                                                 </div>
                                             </div>
                                         </div>`

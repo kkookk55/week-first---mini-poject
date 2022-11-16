@@ -63,7 +63,6 @@
             let title = $('#floatingInput').val()
             let mbti = $('#mbti').val()
             let contents = $('#exampleFormControlTextarea1').val()
-            // let user_id = $('#contents').val()
 
             $.ajax({
                 type: 'POST',
@@ -71,7 +70,8 @@
                 data: {title_give: title, mbti_give: mbti, contents_give: contents},
                 success: function (response) {
                     alert(response['msg'])
-                    window.location.reload()
+                    let postnum = response['postnum']
+                    window.location.href="/index"
                 }
             });
         }
