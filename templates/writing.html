@@ -65,14 +65,13 @@
             let contents = $('#exampleFormControlTextarea1').val()
             // let user_id = $('#contents').val()
 
-
             $.ajax({
                 type: 'POST',
                 url: '/writing',
                 data: {title_give: title, mbti_give: mbti, contents_give: contents},
                 success: function (response) {
                     alert(response['msg'])
-                    window.location.reload() // 새로고침
+                    window.location.reload()
                 }
             });
         }

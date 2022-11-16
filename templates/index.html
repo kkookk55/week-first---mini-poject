@@ -77,16 +77,22 @@
                     console.log(response['content'])
                     let rows = response['content']
                     for (let i = 0; i < rows.length; i++) {
-                        let title = rows[i]['title']
-                        let mbti = rows[i]['mbti']
-                        let contents = rows[i]['contents']
+                    let title = rows[i]['title']
+                    let mbti = rows[i]['mbti']
+                    let contents = rows[i]['contents']
 
-                        let temp_html = `<h1>${title}</h1>
-                                        <h2>${mbti}</h2>
-                                        <h2>${contents}</h2>
-                        `
+                    let temp_html = `<h1>${title}</h1>
+                                        <div id="align_body">
+                                            <div id="mbti_check">
+                                                ${mbti}
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
+                                        </div>
+`
 
-                        $('#mbti-writing').append(temp_html)
+                    $('#mbti-writing').append(temp_html)
                     }
                 }
             });
@@ -113,19 +119,7 @@
 <body>
 <div class="mybox" id="mbti-writing"></div>
 
-<div id="align_body">
-    <div id="mbti_check">
-        ${mbti}
-    </div>
-</div>
 
-
-
-<div class="mb-3">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
-
-
-</div>
 <div id="like_btn">
     <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
         좋아요
@@ -140,7 +134,6 @@
     <button type="button" class="btn btn-secondary" id="btn_sujeong">수정하기</button>
     <button type="button" class="btn btn-danger" onclick="return confirm('정말삭제하시겠습니까?')">삭제하기</button>
 </div>
-
 
 </body>
 </html>

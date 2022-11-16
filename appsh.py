@@ -31,7 +31,7 @@ def web_mbti_post():
 
 @app.route("/index", methods=["GET"])
 def contents_get():
-    contents_list = list(db.mbti.find({}, {'_id': False}))
+    contents_list = list(db.mbti.find({},{'_id':False}))
     return jsonify({'content':contents_list})
 
 
