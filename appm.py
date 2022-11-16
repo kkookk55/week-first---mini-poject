@@ -43,8 +43,15 @@ def home():
 
 @app.route('/main')
 def goMain():
-    msg = request.args.get("msg")
-    return render_template('mainpage1.html', msg=msg)
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"id": payload['id']})
+        return render_template('mainpage1.html', userid=user_info["id"])
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route('/login')
@@ -99,7 +106,7 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=500)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -138,32 +145,6 @@ def api_valid():
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
 
         # ///////////////////////////////////////////////////////
-
-
-@app.route('/writing')
-def homes():
-    return render_template('writing.html')
-
-@app.route('/writing', methods=['POST'])
-def web_mbti_post():
-    title_receive = request.form['title_give']
-    mbti_receive = request.form['mbti_give']
-    contents_receive = request.form['contents_give']
-# doc = 저장
-    doc = {
-        'title':title_receive,
-        'mbti':mbti_receive,
-        'contents:':contents_receive
-    }
-    db.mbti.insert_one(doc)
-    return jsonify({'msg': '저장 완료!'})
-
-@app.route("/posts", methods=["GET"])
-def posts_get():
-    posts_list = list(db.mbti.find({},{'_id':False}))
-    return jsonify({'post':posts_list})
-
-
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
