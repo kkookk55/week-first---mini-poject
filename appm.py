@@ -5,7 +5,7 @@ app = Flask(__name__)
 from pymongo import MongoClient
 import certifi
 
-ca=certifi.where()
+ca = certifi.where()
 
 client = MongoClient("mongodb+srv://test:test@cluster0.15fhovx.mongodb.net/test", tlsCAFile=ca)
 db = client.dbsparta_plus_week4
@@ -63,6 +63,10 @@ def login():
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+@app.route('/writing')
+def writing():
+    return render_template('writing.html')
 
 
 #################################
@@ -145,6 +149,23 @@ def api_valid():
         return jsonify({'result': 'fail', 'msg': '로그인 정보가 존재하지 않습니다.'})
 
         # ///////////////////////////////////////////////////////
+
+
+@app.route('/writing', methods=['POST'])
+def web_mbti_post():
+    title_receive = request.form['title_give']
+    mbti_receive = request.form['mbti_give']
+    contents_receive = request.form['contents_give']
+    # doc = 저장
+    doc = {
+        'title': title_receive,
+        'mbti': mbti_receive,
+        'contents': contents_receive,
+    }
+    db.mbti.insert_one(doc)
+
+    return jsonify({'msg': '저장 완료!'})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
