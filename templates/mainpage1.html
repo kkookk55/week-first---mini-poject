@@ -149,153 +149,99 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <div class="nav">
-            <div id="logout">
-                <button onclick="window.location.href='/'">로그아웃</button>
-                <span>{{userid}} 님 반갑습니다.</span>
+<div class="container">
+    <div class="nav">
+        <div id="logout">
+            <button onclick="window.location.href='/'">로그아웃</button>
+            <span>{{ userid }} 님 반갑습니다.</span>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="main-title">
+            <h2>MBTI 과몰입러들의 TIL</h2>
+        </div>
+        <div class="main-menu">
+            <div class="main-nav">
+                <div class="mbti-op">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            MBTI선택하기
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li>
+                                <button class="dropdown-item" type="button">ESTJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ESTP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ESFJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ESFP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ENTJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ENTP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ENFJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ENFP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ISTJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ISTP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ISFJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">ISFP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">INTJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">INTP</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">INFJ</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button">INFP</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="main-search">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control op-color" placeholder="검색하기"
+                               aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary op-color op-color-hover" type="button"
+                                id="button-addon2">찾기
+                        </button>
+                    </div>
+                </div>
+                <div class="main-writing">
+                    <button type="button" class="btn btn-outline-secondary op-color op-color-hover"
+                            onclick="window.location.href='/writing'">
+                        글쓰기
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="main-container">
-            <div class="main-title">
-                <h2>MBTI 과몰입러들의 TIL</h2>
-            </div>
-            <div class="main-menu">
-                <div class="main-nav">
-                    <div class="mbti-op">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                MBTI선택하기
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li>
-                                    <button class="dropdown-item" type="button">ESTJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ESTP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ESFJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ESFP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ENTJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ENTP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ENFJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ENFP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ISTJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ISTP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ISFJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">ISFP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">INTJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">INTP</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">INFJ</button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" type="button">INFP</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="main-search">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control op-color" placeholder="검색하기"
-                                   aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-outline-secondary op-color op-color-hover" type="button" id="button-addon2">찾기</button>
-                        </div>
-                    </div>
-                    <div class="main-writing">
-                        <button type="button" class="btn btn-outline-secondary op-color op-color-hover" onclick="window.location.href='/writing'">
-                            글쓰기</button>
-                    </div>
-                </div>
-            </div>
-            <div class="main-body">
-                <div class="row row-cols-1 row-cols-md-3 g-4" id="post-box">
-                    <div class="col">
-                        <div class="card h-100">
-                            <h6 class="card-mbti" id="mbti">mbti</h6>
-                            <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title" id="title">TIL제목</h5>
-                                <h6 class="card-title" id="">작성자</h6>
-                                <p class="card-text" id="contents">
-                                    - 변수 선언은 변수에 어떤 type의 데이터를 저장할 것인지 그리고 변수 이름이 무엇인지 결정
-                                    - int v1 = 0; //정수type
-                                    String name = "홍길동"; //문자열
-                                    - import java.util.Scanner; //Scanner가 java.util 패키지에 있다는 것을 컴파일러에게 알림
-                                    Scanner scanner = new Scanner(System.in); // 시스템의 입력 장치로부터 읽는 scanner 생성
-                                    String inputData = scanner.nextLine();
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <h6 class="card-mbti">mbti</h6>
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">TIL제목</h5>
-                                <h6 class="card-title">TIL기술</h6>
-                                <p class="card-text">
-                                    - 변수 선언은 변수에 어떤 type의 데이터를 저장할 것인지 그리고 변수 이름이 무엇인지 결정
-                                    - int v1 = 0; //정수type
-                                    String name = "홍길동"; //문자열
-                                    - import java.util.Scanner; //Scanner가 java.util 패키지에 있다는 것을 컴파일러에게 알림
-                                    Scanner scanner = new Scanner(System.in); // 시스템의 입력 장치로부터 읽는 scanner 생성
-                                    String inputData = scanner.nextLine();
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <h6 class="card-mbti">mbti</h6>
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in
-                                    to additional content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <h6 class="card-mbti">mbti</h6>
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="main-body">
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="post-box">
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
