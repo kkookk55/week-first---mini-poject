@@ -71,7 +71,7 @@
                 success: function (response) {
                     alert(response['msg'])
                     let postnum = response['postnum']
-                    window.location.href="/index"
+                    window.location.href='/index?postnum='+postnum;
                 }
             });
         }

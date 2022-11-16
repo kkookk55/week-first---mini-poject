@@ -68,20 +68,26 @@
         });
 
         function show_mbti() {
+            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
+            console.log(hashes)
+            console.log(hashes)
+            console.log(hashes)
             $('#mbti-writing').empty()
             $.ajax({
-                type: "GET",
-                url: "/index",
-                data: {},
+                type: "POST",
+                url: "/api/index",
+                data: { postnum_give : hashes},
                 success: function (response) {
-                    console.log(response['content'])
-                    let rows = response['content']
-                    for (let i = 0; i < rows.length; i++) {
-                    let title = rows[i]['title']
-                    let mbti = rows[i]['mbti']
-                    let contents = rows[i]['contents']
-
+                    console.log(response['post'])
+                    let row = response['post']
+                    let title = row['title']
+                    let mbti = row['mbti']
+                    let contents = row['contents']
+                    let user = row['userid']
+                    let num = row['num']
                     let temp_html = `<h1>${title}</h1>
+                                      <p>작성자: ${user} //게시물 번호: ${num}</p>
+
                                         <div id="align_body">
                                             <div id="mbti_check">
                                                 ${mbti}
@@ -89,12 +95,11 @@
                                         </div>
                                         <div class="mb-3">
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
-                                        </div>
-`
+                                        </div>`
 
                     $('#mbti-writing').append(temp_html)
                     }
-                }
+
             });
         }
 

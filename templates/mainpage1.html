@@ -84,8 +84,10 @@
             justify-content: space-between;
             margin: auto;
         }
+
     </style>
     <script>
+
         $(document).ready(function () {
             listing();
         });
@@ -105,7 +107,7 @@
                         let writer = rows[i]['userid']
                         let postnum = rows[i]['num']
                         let temp_html = `<div class="col">
-                                            <div class="card h-100">
+                                            <div class="card h-100" onclick="move(${postnum})">
                                                 <h6 class="card-mbti" id="mbti">게시글번호:${postnum} / MBTI: ${mbti}</h6>
                                                 <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
                                                 <div class="card-body">
@@ -114,6 +116,7 @@
                                                     <p class="card-text" id="contents">
                                                         ${contents}
                                                     </p>
+                                                    <button onclick="move(${postnum})">글로이동</button>
                                                 </div>
                                             </div>
                                         </div>`
@@ -124,38 +127,25 @@
         }
 
 
-            function listing_mbti() {
+        function move(postnum) {
                 $.ajax({
-                    type: 'GET',
-                    url: '/postchosen',
-                    data: {},
+                    type: "POST",
+                    url: "/index",
+                    data: {
+                        postnum_give: postnum
+                    },
                     success: function (response) {
-                        console.log(response['mbtipost'])
-                        let rows = response['mbtipost']
-                        for (let i = 0; i < rows.length; i++) {
-                            let mbti = rows[i]['mbti']
-                            let title = rows[i]['title']
-                            let contents = rows[i]['contents']
+                        let rows = response['postinfo']
+                        console.log(rows['num'])
 
-                            let temp_html = `<div class="col">
-                                            <div class="card h-100">
-                                                <h6 class="card-mbti" id="mbti">${mbti}</h6>
-                                                <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg" class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" id="title">${title}</h5>
-                                                    <h6 class="card-title" id="">작성자</h6>
-                                                    <p class="card-text" id="contents">
-                                                        ${contents}
-                                                    </p>
-                                                     <button>해당 글로 이동하는 버튼입니다</button>
-                                                </div>
-                                            </div>
-                                        </div>`
-                            $('#post-box').append(temp_html)
-                        }
+                        let postnum = rows['num']
+
+                        window.location.href='/index?postnum='+postnum;
                     }
                 })
             }
+
+            ////////////////////////////////////
     </script>
 </head>
 <body>

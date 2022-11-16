@@ -23,12 +23,17 @@ import datetime
 import hashlib
 
 
-#################################
-##  HTML을 주는 부분             ##
-#################################
 @app.route('/')
 def home():
     return render_template('login.html')
+
+@app.route("/api/index", methods=["POST"])
+
+def post_get():
+    post_receive = request.form['postnum_give']
+    post = db.post.find_one({'num':int(post_receive)},{'_id':False})
+    return jsonify({'post':post})
+
 
 @app.route('/index')
 def goindex():
@@ -61,10 +66,17 @@ def register():
 def writing():
     return render_template('writing.html')
 
-@app.route("/index", methods=["GET"])
+@app.route("/index", methods=["POST"])
 def contents_get():
-    contents_list = list(db.post.find({},{'_id':False}))
-    return jsonify({'content':contents_list})
+    postnum_receive = request.form['postnum_give']
+
+    print(postnum_receive)
+    # ok
+
+    content = db.post.find_one({'num':int(postnum_receive)},{'_id':False})
+    print(content)
+
+    return jsonify({'postinfo':content})
 
 #################################
 ##  로그인을 위한 API            ##
@@ -107,7 +119,7 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=500)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=50000)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -178,9 +190,8 @@ def web_mbti_post():
         'userid' : userid_receive
     }
     db.post.insert_one(doc)
-
-    postnum = db.post.find_one({'num':count},{'_id':False})
-    return jsonify({'msg': '저장 완료!'},{'postnum':postnum})
+    postnum = count
+    return jsonify({'msg': '저장 완료!','postnum':postnum})
 
 
 if __name__ == '__main__':
