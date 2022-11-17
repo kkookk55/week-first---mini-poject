@@ -154,9 +154,13 @@ def api_valid():
 
 @app.route("/api/index", methods=["POST"])
 def post_get():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    linkuser = db.user.find_one({"id": payload['id']})
+    print(linkuser)
     post_receive = request.form['postnum_give']
     post = db.post.find_one({'num':int(post_receive)},{'_id':False})
-    return jsonify({'post':post})
+    return jsonify({'post':post, 'linkuser':linkuser['id']})
 
 
 @app.route("/index", methods=["POST"])

@@ -80,20 +80,44 @@
 
         function show_mbti() {
             let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
+            console.log(hashes)
+            console.log(hashes)
+            console.log(hashes)
             $('#mbti-writing').empty()
             $.ajax({
                 type: "POST",
                 url: "/api/index",
-                data: { postnum_give : hashes},
+                data: {postnum_give: hashes},
                 success: function (response) {
+                    console.log(response['post'])
+
+                    let linkuser = response['linkuser']
                     let row = response['post']
                     let title = row['title']
                     let mbti = row['mbti']
                     let contents = row['contents']
-                    let user = row['userid']
+                    let writer = row['userid']
                     let num = row['num']
-                    let temp_html = `<h1>${title}</h1>
-                                      <p>작성자: ${user} //게시물 번호: ${num}</p>
+                    let temp_html =``
+                    if(linkuser==writer){
+                    temp_html = `<h1>${title}</h1>
+                                      <p>작성자: ${writer} //게시물 번호: ${num}</p>
+
+                                        <div id="align_body">
+                                            <div id="mbti_check">
+                                                ${mbti}
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
+                                        </div>
+                                        <div id="recall">
+                                        <button type="button" class="btn btn-secondary" id="btn_sujeong" onclick="sujeong()">수정하기</button>
+                                        <button type="button" class="btn btn-danger" onclick="deletePost()">삭제하기</button>
+                                         </div>`
+                    }else{
+                        temp_html=`<h1>${title}</h1>
+                                      <p>작성자: ${writer} //게시물 번호: ${num}</p>
 
                                         <div id="align_body">
                                             <div id="mbti_check">
@@ -103,9 +127,9 @@
                                         <div class="mb-3">
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
                                         </div>`
-
-                    $('#mbti-writing').append(temp_html)
                     }
+                    $('#mbti-writing').append(temp_html)
+                }
 
             });
         }
@@ -169,10 +193,7 @@
             </span>
         </button>
     </div>
-    <div id="recall">
-        <button type="button" class="btn btn-secondary" id="btn_sujeong">수정하기</button>
-        <button type="button" class="btn btn-danger" onclick="deletePost()">삭제하기</button>
-    </div>
+
 
 </body>
 </html>
