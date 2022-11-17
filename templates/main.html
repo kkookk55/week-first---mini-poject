@@ -56,11 +56,11 @@
 
         .main-title {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
 
         .main-menu {
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
 
         .mbti-op {
@@ -71,8 +71,8 @@
             width: 700px;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
-            margin: auto;
+            justify-content: center;
+            margin: auto -50px auto auto;
         }
 
         .card{
@@ -102,6 +102,22 @@
             padding: 15px 0px 10px 15px;
         }
 
+        .card-text {
+            display: -webkit-box;
+            word-wrap: break-word;
+            -webkit-line-clamp: 7;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 190px;
+        }
+
+        #dropdownMenu2 {
+            background-color: #0b2144;
+            color: white;
+            margin-top: 20px;
+        }
+
 
     </style>
     <script>
@@ -116,6 +132,7 @@
                 url: '/posts',
                 data: {},
                 success: function (response) {
+                    console.log(response['post'])
                     let rows = response['post']
                     for(let i = 0; i<rows.length;i++) {
                         let mbti =rows[i]['mbti']
@@ -155,6 +172,7 @@
                     },
                     success: function (response) {
                         let rows = response['postinfo']
+                        console.log(rows['num'])
 
                         let postnum = rows['num']
 
@@ -163,7 +181,7 @@
                 })
             }
 
-            function golist(mbti) {
+        function golist(mbti) {
             let word = mbti;
             alert('리스트로 이동합니다');
             window.location.href='/getmbtilist?mbti='+word;
@@ -180,7 +198,7 @@
                 </div>
                 <div class="logout">
                     <button onclick="window.location.href='/'">로그아웃</button>
-                    <span>{{userid}} 님 반갑습니다.</span>
+                    <span>{{userid}}님 반갑습니다.</span>
                 </div>
             </div>
             <div class="main-container">
@@ -246,7 +264,6 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </div>
