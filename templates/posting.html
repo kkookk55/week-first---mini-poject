@@ -128,13 +128,13 @@
                                                 <div class="mbti"><h5>MBTI : ${mbti}</h5></div>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                <input type="email" class="form-control" id="floatingInput" placeholder=""/>
                                                 <label for="floatingInput" class="form-label" id="title">작성자 : ${writer}</label>
                                             </div>
                                             <div class="form-floating">
-                                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                                              style="height: 400px"></textarea>
-                                                <label for="floatingTextarea2" class="form-label">${contents}</label>
+                                                   <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                                              style="height: 400px">${contents}</textarea>
+                                                <label for="floatingTextarea2" class="form-label"></label>
                                             </div>
                                             <div class="mybtn">
                                                 <button type="button" class="btn btn-outline-light" value="history.back()" onclick="history_back()">
@@ -164,13 +164,13 @@
                                                 <div class="mbti"><h5>MBTI : ${mbti}</h5></div>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                <input type="email" class="form-control" id="floatingInput" placeholder="작성자 : ${writer}" readonly />
                                                 <label for="floatingInput" class="form-label" id="title">작성자 : ${writer}</label>
                                             </div>
                                             <div class="form-floating">
                                                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                                              style="height: 400px"></textarea>
-                                                <label for="floatingTextarea2" class="form-label">${contents}</label>
+                                                              style="height: 400px" readonly>${contents}</textarea>
+                                                <label for="floatingTextarea2" class="form-label"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -231,6 +231,9 @@
 </head>
 <body>
     <div id="container">
+
     </div>
 </body>
 </html>
+
+
