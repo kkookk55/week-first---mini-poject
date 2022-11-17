@@ -18,10 +18,20 @@
             font-family: 'Gowun Dodum', sans-serif;
         }
 
+        .body-container {
+            max-width:1000px;
+            width: 90%;
+            height: 100vh;
+            margin: auto;
+
+        }
+        .body-heading {
+            margin-top:95px;
+        }
         h1 {
             text-align: center;
-            margin: 30px 0px 50px 0px;
-            line-height: 100px;
+            margin-bottom: 50px;
+            padding-top: 10px;
             font-weight: bold;
         }
 
@@ -29,24 +39,31 @@
             width: 150px;
         }
 
-        .form-control {
-            maring-bottom: 40px;
+        .form-label {
+            color: #0b2144;
         }
 
-        /*mbti*/
         .mypost {
             max-width: 90%;
             margin: auto;
             box-shadow: 0px 0px 3px 0px gray;
-            padding: 40px;
-            margin-bottom: 100px;
+            padding: 50px;
+            background-color: #0b2144;
+            color: white;
+        }
+        .mbti {
+            margin:10px 10px 0px 0px;
         }
 
         .mybtn {
-            margin-top: 20px;
+            margin-top: 25px;
+            padding-left: 633px
+        }
+        .mybtn > button {
+            margin-left: 12px
         }
 
-        #exampleFormControlTextarea1 {
+        #floatingTextarea2 {
             height: 400px;
             margin: 20px auto 10px auto;
         }
@@ -55,14 +72,14 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
     </style>
     <script>
         function save_writing() {
             let title = $('#floatingInput').val()
             let mbti = $('#mbti').val()
-            let contents = $('#exampleFormControlTextarea1').val()
+            let contents = $('#floatingTextarea2').val()
 
             $.ajax({
                 type: 'POST',
@@ -79,59 +96,58 @@
 </head>
 
 <body>
-<!--제목-->
-<h1>글 작성 페이지</h1>
+    <div class="body-container">
+        <!--제목-->
+        <div class="body-heading"><h1>글 작성 페이지</h1></div>
 
-<!--mbti-->
-<div class="mypost">
-    <div class="mbti-list">
-        <h5 class="mbti">본인의 MBTI</h5>
-        <select class="form-select" aria-label="Default select example" id="mbti">
-            <option selected>선택하기</option>
-            <option value="ENTJ">ENTJ</option>
-            <option value="ENTP">ENTP</option>
-            <option value="ENFJ">ENFJ</option>
-            <option value="ENFP">ENFP</option>
-            <option value="ESTJ">ESTJ</option>
-            <option value="ESTP">ESTP</option>
-            <option value="ESFJ">ESFJ</option>
-            <option value="ESFP">ESFP</option>
-            <option value="INTJ">INTJ</option>
-            <option value="INTP">INTP</option>
-            <option value="INFJ">INFJ</option>
-            <option value="INFP">INFP</option>
-            <option value="ISTJ">ISTJ</option>
-            <option value="ISTP">ISTP</option>
-            <option value="ISFJ">ISFJ</option>
-            <option value="ISFP">ISFP</option>
+        <!--mbti-->
+        <div class="mypost">
+            <div class="mbti-list">
+                <div class="mbti"><h5>본인의 MBTI</h5></div>
+                <select class="form-select" aria-label="Default select example" id="mbti">
+                    <option selected>선택하기</option>
+                    <option value="ENTJ">ENTJ</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ESFP">ESFP</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="INTP">INTP</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INFP">INFP</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="ISFP">ISFP</option>
+                </select>
+            </div>
+            <!--제목 작성-->
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput" class="form-label" id="title">제목을 입력하세요.</label>
+            </div>
 
-
-        </select>
-
+            <!--    글 내용 작성-->
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                          style="height: 400px"></textarea>
+                <label for="floatingTextarea2" class="form-label">내용을 입력하세요.</label>
+            </div>
+            <!--작성 취소 버튼-->
+            <script>
+                function history_back() {
+                    history.back();
+                }
+            </script>
+            <div class="mybtn">
+                <button type="button" class="btn btn-outline-light" value="history.back()" onclick="history_back()">취소</button>
+                <button type="button" class="btn btn-outline-light" onclick="save_writing()">작성하기</button>
+            </div>
+        </div>
     </div>
-    <!--제목 작성-->
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput" id="title">제목을 입력하세요.</label>
-    </div>
-
-    <!--    글 내용 작성-->
-    <div class="mb-3">
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">내용을 입력하세요.</textarea>
-    </div>
-    <!--작성 취소 버튼-->
-    <script>
-        function history_back() {
-            history.back();
-        }
-    </script>
-    <div class="mybtn">
-        <button type="button" class="btn btn-dark" value="history.back()" onclick="history_back()">취소</button>
-        <button onclick="save_writing()" type="button" class="btn btn-outline-dark">작성하기</button>
-
-    </div>
-</div>
-
 </body>
 
 </html>
