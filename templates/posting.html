@@ -16,87 +16,98 @@
             font-family: 'Gowun Dodum', sans-serif;
         }
 
-        .mybox {
-            max-width: 1000px;
+
+        .body-container {
+            max-width:1000px;
             width: 90%;
+            /*max-height: 1000px;*/
+            /*height: 95%;*/
             height: 100vh;
             margin: auto;
+
         }
 
+        .nav {
+            padding-top: 50px;
+            padding-left: 65px;
+            display: flex;
+            justify-content:start;
+        }
+
+        .body-heading {
+            /*margin-top:95px;*/
+        }
         h1 {
             text-align: center;
-            margin: 30px 0px 50px 0px;
-            line-height: 10px;
+            margin-bottom: 50px;
+            padding-top: 10px;
+            /*line-height: 100px;*/
+            font-weight: bold;
         }
 
-        #align_body {
-            width: 1200px;
-            margin: 20px auto 10px auto;
+        .form-select {
+            width: 150px;
         }
 
-        #exampleFormControlTextarea1 {
-            height: 400px;
-            width: 1200px;
-            margin: 20px auto 10px auto;
+        .form-label {
+            color: #0b2144;
+            /*maring-bottom: 40px;*/
+        }
+
+        /*mbti*/
+        .mypost {
             max-width: 90%;
-
-
-        }
-        
-
-        #mbti_check {
-            border: 1px solid green;
-            background-color: green;
-            width: 90px;
-            height: 30px;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 20px;
+            margin: auto;
+            box-shadow: 0px 0px 3px 0px gray;
+            padding: 50px;
+            /*margin-bottom: 100px;*/
+            background-color: #0b2144;
             color: white;
         }
+        .mbti {
+            margin:10px 10px 0px 0px;
+        }
 
+        .mybtn {
+            margin-top: 25px;
+            padding-left: 600px
+        }
+        .mybtn > button {
+            margin-left: 12px
+        }
+
+        #floatingTextarea2 {
+            height: 400px;
+            margin: 20px auto 10px auto;
+        }
+
+        .mbti-list {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+        }
         #like_btn {
-            display: block;
-            margin: auto;
-            text-align: center;
-            margin-bottom: 50px;
-
-            background-color: transparent;
-            border: 0;
+            display: flex;
+            justify-content: center;
+            margin-top: -80px;
         }
-
-        #recall {
-            width: 300px;
-            float: right;
-        }
-
-        #btn_sujeong {
-            margin-right: 20px
-        }
-
-        img {
-            margin: 30px 10px 10px 100px;
-        }
-
-
     </style>
     <script>
+
         $(document).ready(function () {
             show_mbti();
         });
 
         function show_mbti() {
             let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
-            {#console.log(hashes)#}
-            {#console.log(hashes)#}
-            {#console.log(hashes)#}
-            $('#mbti-writing').empty()
+            $('#container').empty()
             $.ajax({
                 type: "POST",
                 url: "/api/index",
                 data: {postnum_give: hashes},
                 success: function (response) {
-                    {#console.log(response['post'])#}
+
 
                     let linkuser = response['linkuser']
                     let row = response['post']
@@ -107,25 +118,73 @@
                     let num = row['num']
                     let temp_html = ``
                     if (linkuser == writer) {
-                        temp_html = `<h1>${title}</h1>
-                                        <div class="card" id="exampleFormControlTextarea1">
-                                          <div class="card-body">
-                                            <p>작성자: ${writer} [${mbti}]</p>${contents}
-                                          </div>
+                        temp_html = `<div class="body-container">
+                                        <div class="nav">
+                                            <a href="/main"><img src="/static/homelog.png" style="width:50px; height:50px;"></a>
                                         </div>
-                                        <div id="recall">
-                                        <button type="button" class="btn btn-secondary" id="btn_sujeong" onclick="sujeong()">수정하기</button>
-                                        <button type="button" class="btn btn-danger" onclick="deletePost()">삭제하기</button>
-                                         </div>`
+                                        <div class="body-heading"><h1>${title}</h1></div>
+                                        <div class="mypost">
+                                            <div class="mbti-list">
+                                                <div class="mbti"><h5>MBTI : ${mbti}</h5></div>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                <label for="floatingInput" class="form-label" id="title">작성자 : ${writer}</label>
+                                            </div>
+                                            <div class="form-floating">
+                                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                                              style="height: 400px"></textarea>
+                                                <label for="floatingTextarea2" class="form-label">${contents}</label>
+                                            </div>
+                                            <div class="mybtn">
+                                                <button type="button" class="btn btn-outline-light" value="history.back()" onclick="history_back()">
+                                                    수정하기
+                                                </button>
+                                                <button type="button" class="btn btn-outline-light" onclick="save_writing()">삭제하기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="like_btn">
+                                        <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
+                                            좋아요
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            <div id='result'>0</div>
+                                            <span class="visually-hidden">unread messages</span>
+                                            </span>
+                                        </button>
+                                    </div>`
                     } else {
-                        temp_html = `<h1>${title}</h1>
-                                        <div class="card" id="exampleFormControlTextarea1">
-                                          <div class="card-body">
-                                            <p>작성자: ${writer} [${mbti}]</p>${contents}
-                                          </div>
-                                        </div>`
+                        temp_html = `<div class="body-container">
+                                        <div class="nav">
+                                            <a href="/main"><img src="/static/homelog.png" style="width:50px; height:50px;"></a>
+                                        </div>
+                                        <div class="body-heading"><h1>${title}</h1></div>
+                                        <div class="mypost">
+                                            <div class="mbti-list">
+                                                <div class="mbti"><h5>MBTI : ${mbti}</h5></div>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                <label for="floatingInput" class="form-label" id="title">작성자 : ${writer}</label>
+                                            </div>
+                                            <div class="form-floating">
+                                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                                              style="height: 400px"></textarea>
+                                                <label for="floatingTextarea2" class="form-label">${contents}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="like_btn">
+                                        <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
+                                            좋아요
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            <div id='result'>0</div>
+                                            <span class="visually-hidden">unread messages</span>
+                                            </span>
+                                        </button>
+                                    </div>`
                     }
-                    $('#mbti-writing').append(temp_html)
+                    $('#container').append(temp_html)
                 }
 
             });
@@ -144,42 +203,34 @@
             }
 
             // 결과 출력
-            {#console.log("좋아요: " + number)#}
+            console.log("좋아요: " + number)
             resultElement.innerText = number;
         }
 
-        function deletePost() {
-            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
-            $.ajax({
+        function deletePost(){
+              let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
+                $.ajax({
 
-                type: "POST",
-                url: "/api/delete",
-                data: {
-                    postnum_give: hashes
-                },
-                success: function (response) {
-                    let msg = response['msg']
-                    alert(msg)
-                    window.location.href = '/main'
+                    type: "POST",
+                    url: "/api/delete",
+                    data: {
+                        postnum_give: hashes
+                    },
+                    success: function (response) {
+                        let msg =response['msg']
+                        alert(msg)
+                        window.location.href='/main'
+                    }
+                })
+            }
+
+                function history_back() {
+                    history.back();
                 }
-            })
-        }
-
     </script>
 </head>
 <body>
-<a href="/main"><img src="/static/homelog.png" style="width:80px; height:80px;"></a>
-<div class="mybox" id="mbti-writing"></div>
-<div id="like_btn">
-    <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
-        좋아요
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            <div id='result'>0</div>
-            <span class="visually-hidden">unread messages</span>
-            </span>
-    </button>
-</div>
-
-
+    <div id="container">
+    </div>
 </body>
 </html>
