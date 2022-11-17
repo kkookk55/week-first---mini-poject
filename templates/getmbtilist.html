@@ -118,13 +118,20 @@
                 data: {mbti_give:hashes},
                 success: function (response) {
                     let rows = response['post']
-                    for(let i = 0; i<rows.length;i++) {
-                        let mbti =rows[i]['mbti']
-                        let title= rows[i]['title']
-                        let contents = rows[i]['contents']
-                        let writer = rows[i]['userid']
-                        let postnum = rows[i]['num']
-                        let temp_html = `<div class="col">
+                    console.log(rows)
+                    if (rows.length == 0) {
+                        alert('해당 mbti의 게시글이 존재하지 않습니다.')
+                        window.location.href = '/main'
+                    } else {
+                        for (let i = 0; i < rows.length; i++) {
+                            let mbti = rows[i]['mbti']
+                            let title = rows[i]['title']
+                            let contents = rows[i]['contents']
+                            let writer = rows[i]['userid']
+                            let postnum = rows[i]['num']
+
+
+                            let temp_html = `<div class="col">
                                             <div class="card h-100" onclick="move(${postnum})">
                                                 <div class="card-mbti"><h6 id="mbti">게시글번호:${postnum} / MBTI: ${mbti}</h6></div>
                                                 <img src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_960_720.jpg"
@@ -140,10 +147,10 @@
                                                 </div>
                                             </div>
                                         </div>`
-                        $('#post-box').append(temp_html)
+                            $('#post-box').append(temp_html)
+                        }
                     }
-                }
-            })
+                }})
         }
 
 
@@ -173,6 +180,7 @@
     </script>
 </head>
 <body>
+
     <div class="container">
         <div class="sub-container">
             <div class="nav">
@@ -186,7 +194,7 @@
             </div>
             <div class="main-container">
                 <div class="main-title">
-                    <h2 style="color: #0b2144">MBTI 과몰입러들의 TIL</h2>
+                   <a href="/main"><img src="/static/homelog.png" style="width:80px; height:80px;"></a> <h2 style="color: #0b2144">MBTI 과몰입러들의 TIL</h2>
                 </div>
                 <div class="main-menu">
                     <div class="main-nav">
