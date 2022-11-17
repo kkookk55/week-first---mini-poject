@@ -36,6 +36,13 @@ def goMain():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
+@app.route('/getmbtilist')
+def gogetmbtilist2():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.user.find_one({"id": payload['id']})
+    return render_template('getmbtilist.html', userid=user_info["id"])
+
 #################################
 ##  HTML RENDER_TEMPLATE       ##
 #################################
@@ -58,6 +65,10 @@ def register():
 @app.route('/writing')
 def writing():
     return render_template('writing.html')
+
+@app.route('/getmbtilist')
+def gogetmbtilist():
+    return render_template('getmbtilist.html')
 
 @app.route('/login')
 def login():
@@ -85,6 +96,16 @@ def api_register():
 
     return jsonify({'result': 'success'})
 
+# [mbti 리스트 API]
+@app.route('/api/getmbtilist', methods=['POST'])
+def returnmbtilist():
+
+    mbti_receive = request.form['mbti_give']
+    print(mbti_receive)
+    post_list = list(db.post.find({'mbti':mbti_receive}, {'_id': False}))
+    print(post_list)
+
+    return jsonify({'post': post_list })
 
 # [로그인 API]
 # id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다.

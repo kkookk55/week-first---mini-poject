@@ -111,10 +111,11 @@
         });
 
         function listing() {
+            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 6)
             $.ajax({
-                type: 'GET',
-                url: '/posts',
-                data: {},
+                type: 'POST',
+                url: '/api/getmbtilist',
+                data: {mbti_give:hashes},
                 success: function (response) {
                     let rows = response['post']
                     for(let i = 0; i<rows.length;i++) {
@@ -190,7 +191,7 @@
                 <div class="main-menu">
                     <div class="main-nav">
                         <div class="mbti-op">
-                            <div class="dropdown">
+                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                     MBTI선택하기
@@ -246,7 +247,6 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </div>
