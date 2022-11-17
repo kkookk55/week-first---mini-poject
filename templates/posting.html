@@ -17,7 +17,7 @@
         }
 
         .mybox {
-            max-width:1000px;
+            max-width: 1000px;
             width: 90%;
             height: 100vh;
             margin: auto;
@@ -26,7 +26,7 @@
         h1 {
             text-align: center;
             margin: 30px 0px 50px 0px;
-            line-height: 100px;
+            line-height: 10px;
         }
 
         #align_body {
@@ -38,8 +38,11 @@
             height: 400px;
             width: 1200px;
             margin: 20px auto 10px auto;
+            max-width: 90%;
+
 
         }
+        
 
         #mbti_check {
             border: 1px solid green;
@@ -56,6 +59,7 @@
             display: block;
             margin: auto;
             text-align: center;
+            margin-bottom: 50px;
 
             background-color: transparent;
             border: 0;
@@ -70,26 +74,29 @@
             margin-right: 20px
         }
 
+        img {
+            margin: 30px 10px 10px 100px;
+        }
+
 
     </style>
     <script>
-
         $(document).ready(function () {
             show_mbti();
         });
 
         function show_mbti() {
             let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
-            console.log(hashes)
-            console.log(hashes)
-            console.log(hashes)
+            {#console.log(hashes)#}
+            {#console.log(hashes)#}
+            {#console.log(hashes)#}
             $('#mbti-writing').empty()
             $.ajax({
                 type: "POST",
                 url: "/api/index",
                 data: {postnum_give: hashes},
                 success: function (response) {
-                    console.log(response['post'])
+                    {#console.log(response['post'])#}
 
                     let linkuser = response['linkuser']
                     let row = response['post']
@@ -98,34 +105,24 @@
                     let contents = row['contents']
                     let writer = row['userid']
                     let num = row['num']
-                    let temp_html =``
-                    if(linkuser==writer){
-                    temp_html = `<h1>${title}</h1>
-                                      <p>작성자: ${writer} //게시물 번호: ${num}</p>
-
-                                        <div id="align_body">
-                                            <div id="mbti_check">
-                                                ${mbti}
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
+                    let temp_html = ``
+                    if (linkuser == writer) {
+                        temp_html = `<h1>${title}</h1>
+                                        <div class="card" id="exampleFormControlTextarea1">
+                                          <div class="card-body">
+                                            <p>작성자: ${writer} [${mbti}]</p>${contents}
+                                          </div>
                                         </div>
                                         <div id="recall">
                                         <button type="button" class="btn btn-secondary" id="btn_sujeong" onclick="sujeong()">수정하기</button>
                                         <button type="button" class="btn btn-danger" onclick="deletePost()">삭제하기</button>
                                          </div>`
-                    }else{
-                        temp_html=`<h1>${title}</h1>
-                                      <p>작성자: ${writer} //게시물 번호: ${num}</p>
-
-                                        <div id="align_body">
-                                            <div id="mbti_check">
-                                                ${mbti}
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">${contents}</textarea>
+                    } else {
+                        temp_html = `<h1>${title}</h1>
+                                        <div class="card" id="exampleFormControlTextarea1">
+                                          <div class="card-body">
+                                            <p>작성자: ${writer} [${mbti}]</p>${contents}
+                                          </div>
                                         </div>`
                     }
                     $('#mbti-writing').append(temp_html)
@@ -147,52 +144,41 @@
             }
 
             // 결과 출력
-            console.log("좋아요: " + number)
+            {#console.log("좋아요: " + number)#}
             resultElement.innerText = number;
         }
 
-        function deletePost(){
-              let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
-                $.ajax({
+        function deletePost() {
+            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 9)
+            $.ajax({
 
-                    type: "POST",
-                    url: "/api/delete",
-                    data: {
-                        postnum_give: hashes
-                    },
-                    success: function (response) {
-                        let msg =response['msg']
-                        alert(msg)
-                        window.location.href='/main'
-                    }
-                })
-            }
+                type: "POST",
+                url: "/api/delete",
+                data: {
+                    postnum_give: hashes
+                },
+                success: function (response) {
+                    let msg = response['msg']
+                    alert(msg)
+                    window.location.href = '/main'
+                }
+            })
+        }
 
     </script>
 </head>
 <body>
-    <div class="mybox" id="mbti-writing">
-<!--        <h1>제목</h1>-->
-<!--        <p>작성자: 작성자 //게시물 번호: 번호</p>-->
-<!--        <div id="align_body">-->
-<!--            <div id="mbti_check">-->
-<!--               MBTI-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="mb-3">-->
-<!--            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">내용</textarea>-->
-<!--        </div>-->
-    </div>
-
-    <div id="like_btn">
-        <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
-            좋아요
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+<a href="/main"><img src="/static/homelog.png" style="width:80px; height:80px;"></a>
+<div class="mybox" id="mbti-writing"></div>
+<div id="like_btn">
+    <button type="button" class="btn btn-primary position-relative" onclick='count("plus")' value='+'>
+        좋아요
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <div id='result'>0</div>
             <span class="visually-hidden">unread messages</span>
             </span>
-        </button>
-    </div>
+    </button>
+</div>
 
 
 </body>
